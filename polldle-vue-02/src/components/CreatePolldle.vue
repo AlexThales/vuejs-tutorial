@@ -8,7 +8,8 @@
     <div class="row">
       <div class="col">
         <!-- Directive v-model with question -->
-        <input type="text" class="large-input mx-auto d-block" placeholder="Add your question here">
+        <input type="text" class="large-input mx-auto d-block" placeholder="Add your question here"
+         v-model="question">
       </div>
     </div>
 
@@ -18,15 +19,21 @@
       <div class="col">
         <!-- Directive v-model with newPolldleOptionText -->
         <!-- Directive v-on with addPolldleOption -->
-        <input type="text" placeholder="Polldle Option" class="large-input mx-auto d-block">
+        <input
+          type="text" 
+          placeholder="Polldle Option"
+          v-model="newPolldleOptionText"
+          class="large-input mx-auto d-block"
+          v-on:keypress.enter="addPolldleOption">
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-show="buttonShown">
       <div class="col">
         <!-- Directive v-on with clearAllPolldleOptions -->
         <button
           type="button"
           class="clear-button btn-lg btn-danger mx-auto d-block"
+          v-on:click="clearAllPolldleOptions"
         >Clear all PollDLE Options</button>
       </div>
     </div>
@@ -40,8 +47,10 @@
       <div class="col">
         <!-- Directive v-on with createPolldle -->
         <button
+          v-on:click="createPolldle"
           type="button"
           class="validate-button btn-lg btn-primary mx-auto d-block"
+          v-bind:disabled="isCreatePolldleDisabled()"
         >Create PollDLE</button>
       </div>
     </div>
@@ -52,10 +61,11 @@
       <p>
         The question is:
         <strong>
+          {{question}}
           <!-- Mustache with question -->
         </strong>
       </p>
-      <p>Number of PollDLE options: TODO</p>
+      <p>Number of PollDLE options: {{polldleOptions.length}}</p>
     </div>
 
     <!-- Directive v-text with errorMessage -->
